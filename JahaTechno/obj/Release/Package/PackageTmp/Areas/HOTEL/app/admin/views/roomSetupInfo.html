@@ -1,0 +1,172 @@
+﻿<div class="row" ng-controller="roomSetupInfoCtrl" style="background-color: #00bcd4;">
+
+<div class="col-md-12">
+        <div class="alert alert-danger" ng-show="roomSetupInfoError">
+            <strong>Error: </strong> {{roomSetupInfoError}}
+        </div>
+       <h3>Room Setup</h3>
+        <div class="text-right" style="margin-bottom:10px;">
+            <button type="button" class="btn btn-default" ng-click="addRoomSetupInfo()">Create new</button>
+        </div>
+        <table class="table table-bordered">
+            <thead>
+                <tr >
+                    <th>Room No</th>
+                    <th>Type</th>
+                    <th>Prize</th>
+                    <th>Delete</th>
+                    <th> Room Picture </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="roomSetupInfo in model.roomSetupInfo">
+                    <td>{{roomSetupInfo.RoomNo}}</td>
+                    <td>{{roomSetupInfo.RoomType}}</td>
+                    <td>{{roomSetupInfo.Prize}}</td>
+                    <td>
+                        
+                        <button ng-disabled="GetExistRoomCorrespondingDiscount.indexOf(roomSetupInfo.RoomNo)>-1" type="button" class="btn btn-default"><span class="glyphicon glyphicon-trash" ng-click="delete(roomSetupInfo)" ></span></button>
+                    </td>
+                    <td>
+
+                        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#roomPicture" ng-click="showImage(roomSetupInfo)">Pic</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</div>
+
+
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="addRoomSetupInfoModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-primary">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Add New Room </h4>
+                </div>
+
+
+
+
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form" id="addRoomSetupInfoForm">
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Room No</label>
+                            <input class="form-control normal" ng-model="newroomSetupInfo.RoomNo" required />
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Type</label>
+
+                            <select name="opSelect4" id="opSelect4" ng-model="newroomSetupInfo.RoomType">
+                                <option value="" selected>-- Select --</option>
+                                <option value="Single">Single</option>
+                                <option value="Double">Double</option>
+                                <option value="Twin">Twin</option>
+                                <option value="Duplex">Duplex</option>
+                                <option value="Suite">Suite</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Prize</label>
+                            <input type="text" class="form-control normal" ng-model="newroomSetupInfo.Prize" />
+                        </div>
+
+                        <div class="form-group">
+
+                            
+                            <div >
+                                <label>Room Picture </label>
+                                <input type="file" id="file" name="file" multiple onchange="angular.element(this).scope().setFile(this)"
+                                       accept="image/*" class="btn alert-success"  />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <button ng-click="UploadFile()" class="btn btn-primary" >Upload File</button>
+                        </div>
+
+                    </form>
+                </div>
+                <div data-loading>
+                    Please wait...
+                </div>
+
+             <div class="alert alert-success">
+               File Statas :  {{fileUploaedStatus}}
+             </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" form="addRoomSetupInfoForm" ng-click="insertRoomSetupInfo()">Save changes</button>
+                </div>
+
+
+
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="deleteRoomSetupInfo">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-warning">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Confirm delete!</h4>
+                </div>
+                <div class="modal-body">
+                    <!--<p>One fine body&hellip;</p>-->
+                    <p>Are you sure want to delete this room </p>
+                </div>
+                <div data-loading>
+                    Please wait...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" ng-click="deleteRoomSetupInfoConfirm()">Delete Room Info</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
+
+   
+   
+    
+
+    <!-- Modal -->
+    <div id="roomPicture" class="modal fade" role="dialog" tabindex="-1">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Room Picture</h4>
+                </div>
+                <div class="modal-body well">
+                    
+                    <img src="http://www.jahatechno.com/HotelImageFileUpload/{{roomImagePath}}"/> 
+                   
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+</div>
+

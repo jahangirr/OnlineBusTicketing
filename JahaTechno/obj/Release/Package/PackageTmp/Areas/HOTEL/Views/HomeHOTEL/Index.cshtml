@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/HOTEL/Views/Shared/_Layout.cshtml";
+}
+
+<ng-view />
+@section scripts{
+    <script src="~/Scripts/angular.js"></script>
+    <script src="~/Scripts/angular-animate.js"></script>
+    <script src="~/Scripts/loading-bar.js"></script>
+    <script src="~/Scripts/angular-ui/ui-bootstrap.js"></script>
+    <script src="~/Scripts/angular-ui/ui-bootstrap-tpls.js"></script>
+    <script src="~/Scripts/angular-touch.js"></script>
+    <script src="~/Scripts/angular-route.js"></script>
+    <script>
+            angular.module("hotelApp", ['ngRoute', 'angular-loading-bar', 'ui.bootstrap'])
+            .directive('loading', ['$http', function ($http) {
+                    return {
+                        restrict: 'A',
+                        link: function (scope, elm, attrs) {
+                            scope.isLoading = function () {
+                                return $http.pendingRequests.length > 0;
+                            };
+                            scope.$watch(scope.isLoading, function (v) {
+                                if (v) {
+                                    elm.show();
+                                } else {
+                                    elm.hide();
+                                }
+                            });
+                        }
+                    };
+                }])
+            .config(function ($routeProvider) {
+                $routeProvider.when("/hotelRoomBooking", { templateUrl: "/Areas/HOTEL/app/views/hotelRoomBooking.html" });
+                $routeProvider.when("/home", { templateUrl: "/Areas/HOTEL/app/views/home.html" });
+                $routeProvider.when("/confirmation", { templateUrl: "/Areas/HOTEL/app/views/confirmation.html" });
+                $routeProvider.otherwise({ templateUrl: '/Areas/HOTEL/app/views/home.html' });
+            });
+    </script>
+    <script src="~/Areas/HOTEL/app/controllers/mainCtrl.js"></script>
+    <script src="~/Areas/HOTEL/app/controllers/Services/apiDateTimeLocalize.js"></script>
+    <script src="~/Areas/HOTEL/app/services/apiCallSvc.js"></script>
+    <script src="~/Areas/HOTEL/app/controllers/roomBookingCtrl.js"></script>
+
+
+
+}
+
+
+
+

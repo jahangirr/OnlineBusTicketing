@@ -1,0 +1,64 @@
+﻿<div class="row" ng-controller="summaryCtrl" style="background-color: #00bcd4;">
+    <div class="col-md-8 col-md-offset-2">
+
+        
+        <h3>Your reservation successfull!</h3>
+        <h4>Resrevation Details</h4>
+        <div>
+            <div><strong>Customer Name:</strong> {{model.customer.CustomerName}}</div>
+            <div><strong>Customer Cell:</strong> {{model.customer.MobileNumber}}</div>
+            <div><strong>Customer Address:</strong> {{model.customer.Address}}</div>
+        </div>
+
+        <div>
+         <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th> Bus No </th>
+                        <th> Travel Date </th>
+                        <th> Travel From  </th>
+                        <th> Travel To </th>
+                    </tr>
+                </thead>
+                <tbody>
+
+
+                    <tr>
+                        <td>{{reservationCouchNo}}</td>
+                        <td>{{reservationDepartDateTime|date:'yyyy-MM-dd h:mma'}}</td>
+                        <td>{{reservationFrom}}</td>
+                        <td>{{reservationTo}}</td>
+                        
+                    </tr>
+                </tbody>
+                
+            </table>
+
+
+        </div>
+
+
+        <div>
+            <h3>Selected seats</h3>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Seat Number</th>
+                        <th>Fare</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="seat in model.selectedSeats">
+                        <td>{{seat.seatNumber}}</td>
+                        <td>{{seat.fare|number:2}}</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr><td colspan="2" class="text-right">Total: <span>{{model.total}}</span></td></tr>
+                </tfoot>
+            </table>
+
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,59 @@
+﻿<div class="row" style="background-color: #00bcd4;">
+    <h2>Find your bus</h2>
+    <form name="frmsearch">
+        <div class="col-md-3">
+            <label class="control-label">Tavel From</label>
+            <select class="form-control" ng-options="s for s in model.startPoints" ng-model="searchData.from" ng-change="populateDestinations()">
+                <option value="">Choose one</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label class="control-label">Tavel To</label>
+            <select class="form-control" ng-options="s for s in model.endPoints" ng-model="searchData.To">
+                <option value="">Choose one</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label class="control-label">Date</label>
+            <div class="input-group">
+                <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" ng-model="searchData.date" is-open="popup.opened" datepicker-options="searchData.dateOptions" />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="openfn()"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <label class="control-label">&nbsp;</label>
+            <button type="submit" class="btn btn-default btn-block btn-sm" ng-click="searchSchedule()">Search</button>
+        </div>
+    </form>
+</div>
+<div class="row" ng-show="model.availableSchedules.length>0">
+    <div class="col-md-11">
+        <h3>Bus Available</h3>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Date</th>
+                    <!--<th>Departure Time</th>-->
+                    <th>Bus Type</th>
+                    <th>Fare/Seat</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="schedule in model.availableSchedules">
+                    <td>{{schedule.BusRoute.From}}</td>
+                    <td>{{schedule.BusRoute.To}}</td>
+                    <td>{{schedule.DepartDateTime|date:'yyyy-MM-dd h:mma'}}</td>
+                    <!--<td>{{schedule.DepartDateTime|date:'h:mma'}}</td>-->
+                    <td>{{schedule.Bus.BusType}}</td>
+                    <td>{{schedule.Bus.Fare|number:2}}</td>
+                    <td><button class="btn btn-default btn-sm" ng-click="selectSchedue(schedule.ScheduleId)">Book</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

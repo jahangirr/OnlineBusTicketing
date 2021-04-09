@@ -1,0 +1,393 @@
+﻿<div class="row" ng-controller="roomBookingCtrl">
+
+    <div style="height:20px">
+
+    </div>
+
+    <div class="alert alert-info" ng-show="successMassage">
+        <strong>Success: </strong> {{successMassage}}
+    </div>
+   
+
+    <div class="alert alert-danger" ng-show="error">
+        <strong>Error: </strong> {{error}}
+    </div>
+
+    <form id="f1" name="f1">
+
+        <div class="alert-info">
+
+            <!-- NAME -->
+            <div class="form-group col-md-4 ">
+                <label>First Name</label>
+                <input type="text" name="firstName" class="form-control" ng-model="firstName" ng-disabled="BookingStatusBool" placeholder="ex. owlia " required>
+                <p ng-show="firstName.$invalid && !firstName.$pristine" class="help-block">You first name is required.</p>
+            </div>
+
+            <div class="form-group col-md-4">
+                <label>Last Name</label>
+                <input type="text" name="lastName" class="form-control" ng-model="lastName" ng-disabled="BookingStatusBool" placeholder="ex. ulla ">
+
+            </div>
+
+            <!-- Cell -->
+            <div class="form-group col-md-4">
+                <label>Cell </label>
+                <input type="text" name="cell" class="form-control" ng-model="cell" ng-disabled="BookingStatusBool" placeholder="ex. +88017202....." required>
+                <p ng-show="cell.$invalid && !cell.$pristine" class="help-block">Enter a valid Cell Number.</p>
+            </div>
+
+
+            <!-- EMAIL -->
+            <div class="form-group col-md-4">
+                <label>Email</label>
+                <input type="email" name="email" class="form-control" ng-model="email" ng-disabled="BookingStatusBool" placeholder="ex. youremail@gmail.com" required>
+                <p ng-show="email.$invalid && !email.$pristine" class="help-block">Enter a valid email.</p>
+            </div>
+
+            <div class="form-group col-md-4">
+                <label>Skype</label>
+                <input type="text" name="skypeAddress" class="form-control" ng-model="skypeAddress" ng-disabled="BookingStatusBool" placeholder="ex. yourskype [Optional]">
+            </div>
+
+            <div class="form-group col-md-4">
+                <label>IMO</label>
+                <input type="text" name="IMOAddress" class="form-control" ng-model="IMOAddress" ng-disabled="BookingStatusBool" placeholder="ex. yourimo [Optional]">
+            </div>
+
+
+        </div>
+
+
+        <div class="alert-success">
+
+            <div class="form-group" style="visibility:hidden">
+
+                <input type="text" name="txtBookingID" class="form-control" ng-model="BookingID" value="0" style="background-color:tan" readonly />
+            </div>
+
+
+
+            <div class="form-group" style="visibility:hidden">
+
+                <input type="text" name="txtBookingPersonInfoId" class="form-control" ng-model="BookingPersonInfoId" value="0" style="background-color:tan" readonly />
+            </div>
+
+
+
+            <div class="form-group col-md-4">
+                <label class="control-label">Room NO</label>
+                <div class="input-group">
+                    <select name="opSelect"
+                            id="opSelect"
+                            ng-model="RoomIDs" ng-change="selectRoomBookingDetailsBasedFromDate(RoomIDs, BookedDateFR)"
+                            class="form-control">
+                        <option value="" selected>-- Select --</option>
+                        <option ng-repeat="option in HotelRoomData" value="{{option.RoomNo}}">{{option.RoomNo}}</option>
+                    </select>
+                    <br />
+                    <span class="error" ng-show="(f1.$dirty || IsFormSubmitted) && f1.opSelect.$error.required">
+                        Select Room!
+                    </span>
+
+                </div>
+            </div>
+
+            <div class="form-group col-md-4">
+                <label class="control-label">From Date</label>
+                <div class="input-group">
+                    <input type="text" 
+                           id="txtBookedDateFR" 
+                           ng-change="selectRoomBookingDetailsBasedFromDate(RoomIDs, BookedDateFR)"
+                           class="form-control"
+                           uib-datepicker-popup="yyyy-MM-dd"
+                           ng-model="BookedDateFR"
+                           is-open="popup.opened"
+                           datepicker-options="dateOptions" required />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="openfn()"><i class="glyphicon glyphicon-calendar"></i></button>
+
+                    </span>
+                    <span class="error" ng-show="(f1.$dirty || IsFormSubmitted) && f1.txtBookedDateFR.$error.required">Booking From Date required!</span>
+                </div>
+
+            </div>
+
+            <div class="form-group col-md-4">
+                <label class="control-label">To Date</label>
+                <div class="input-group">
+                    <input type="text"
+                           class="form-control"
+                           uib-datepicker-popup="yyyy-MM-dd"
+                           id="txtBookedDateTO"
+                           ng-model="BookedDateTO" ng-change="selectRoomBookingDetailsBasedFromDate(RoomIDs, BookedDateFR)"
+                           is-open="popup2.opened"
+                           datepicker-options="dateOptions" required />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="openfn2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                    <span class="error" ng-show="(f1.$dirty || IsFormSubmitted) && f1.txtBookedDateTO.$error.required">Booking To Date required!</span>
+                </div>
+            </div>
+
+
+            <div class="form-group col-md-4">
+                <label class="control-label"> Room Info Details</label>
+                <button type="button" class="form-control btn-success" data-toggle="modal" data-target="#roomPicture" ng-click="showImage(RoomIDs)">View</button> 
+            </div>
+
+            <div class="form-group col-md-4">
+                <label class="control-label"> Calculation for Room Booking </label>
+                <button type="button" class="form-control btn-success" ng-click="roomBookingCalculation(RoomIDs,BookedDateFR,BookedDateTO)">Calculation</button>
+            </div>
+
+            <div class="form-group col-md-4">
+
+                <label class="control-label">Booking Status</label>
+                <div class="input-group">
+                    <select name="opSelect1" id="opSelect1"
+                            ng-model="BookingStatus" class="form-control" ng-disabled="BookingStatusBool">
+                        <option value="" selected>-- Select --</option>
+                        <!--<option value="Free">Free</option>
+                        <option value="Occupied">Occupied</option>-->
+                        <option value="Reserved">Reserved</option>
+                    </select>
+                    <br />
+                    <span class="error" ng-show="(f1.$dirty || IsFormSubmitted) && f1.opSelect1.$error.required">Select Booking Status!</span>
+                </div>
+            </div>
+
+
+
+            <div class="form-group col-md-4">
+                <label class="control-label">Payment Type</label>
+
+                <div class="input-group">
+                    <select name="opSelect2" id="opSelect2" ng-model="PaymentStatus" class="form-control">
+                        <option value="" selected>-- Select --</option>
+                        <option value="Paid">Paid</option>
+                        <option value="Not Paid">Not Paid</option>
+                        <option value="Advance">Advance</option>
+                    </select>
+                    <br />
+                    <span class="error" ng-show="(f1.$dirty || IsFormSubmitted) && f1.opSelect2.$error.required">Select Booking Status!</span>
+                </div>
+            </div>
+
+            <div class="form-group col-md-4">
+                <label class="control-label">{{PaymentStatus}}</label>
+                <div class="input-group">
+                    <input type="text" name="txtAdvancePayed" ng-model="AdvancePayed" value="0$" placeholder="0$" required class="form-control" />
+                    <br />
+                    <span class="error" ng-show="(f1.$dirty || IsFormSubmitted) && txtAdvancePayed.$error.required">Advance Payed required!</span>
+                </div>
+            </div>
+
+            <div class="form-group col-md-4">
+                <label class="control-label">Total Discount</label>
+                <div class="input-group">
+                    <input type="text" name="txtTotalDiscount" ng-disabled="true" ng-model="TotalDiscount" value="0"  required class="form-control" />
+                    
+                </div>
+            </div>
+
+            <div class="form-group col-md-4">
+                <label class="control-label">Total Amount For Booking</label>
+                <div class="input-group">
+                    <input type="text" name="txtTotalAmountForBooking" ng-disabled="true" ng-model="TotalAmountForBooking" value="0" required class="form-control" />
+
+                </div>
+            </div>
+
+
+            <div class="form-group col-md-4">
+                <label class="control-label">Vat (%)</label>
+                <div class="input-group">
+                    <input type="text" name="txtVatPercent" ng-disabled="true" ng-model="VatPercent" value="0" required class="form-control" />
+
+                </div>
+            </div>
+
+            <div class="form-group col-md-4">
+                <label class="control-label">Total Vat </label>
+                <div class="input-group">
+                    <input type="text" name="txtTotalVatAmount" ng-disabled="true" ng-model="TotalVatAmount" value="0" required class="form-control" />
+
+                </div>
+            </div>
+
+           
+
+            <!--<div class="form-group col-md-4">
+                <label class="control-label"> Cost break down </label>
+                <button type="button" ng-disabled="true" class="form-control btn-success" data-toggle="modal" data-target="#costBreakDown">View Cost Break down</button>
+            </div>-->
+
+            <div class="form-group col-md-4">
+
+                <label class="control-label">Total Paid</label>
+
+                <div class="input-group">
+                    <input type="text" name="txtTotalAmountPayed" ng-disabled="true" ng-model="TotalAmountPayed" value="0" placeholder="0" required class="form-control" />
+                    <br />
+                    <span class="error" ng-show="(f1.$dirty || IsFormSubmitted) && txtTotalAmountPayed.$error.required">Total Amount Payed required!</span>
+
+                </div>
+
+            </div>
+        </div>
+
+       
+
+      
+        <div class="form-group col-md-4">
+            <label class="control-label">Click to Process your payment </label>
+            <div class="input-group">
+                <input type="button"   ng-click="saveroomBooking()" value="Save" style="background-color:#008000;color:#FFFFFF" required class="form-control" />
+            </div>
+        </div>
+
+        <div data-loading>
+            Please wait...
+        </div>
+
+    </form>
+
+   
+
+    <!-- Modal -->
+    <div id="roomPicture" class="modal fade" role="dialog" tabindex="-1">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Room Picture With Discount Info</h4>
+                </div>
+                <div class="modal-body well">
+
+                    <img src="../../../../HotelImageFileUpload/{{roomImagePath}}" alt="No Image" />
+
+                    <table class="table table-inverse">
+                        <thead>
+                        <tr>
+                            <th> From Date  </th>
+                            <th> To Date  </th>
+                            <th> Discount(%)  </th>
+                         </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-show="roomDiscountInfo.length!=0" ng-repeat="rDiscountInfo in roomDiscountInfo">
+                                <td>
+                                    {{rDiscountInfo.FromDate | date :'mediumDate'}}
+                                </td>
+                                <td>
+                                    {{rDiscountInfo.ToDate | date :'mediumDate'}}
+                                </td>
+                                <td>
+                                    {{rDiscountInfo.DiscountAmount}}
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td ng-show="roomDiscountInfo.length==0">
+                                    No Discount available.
+                                </td>
+                                <td ng-show="roomDiscountInfo.length==0">
+                                   
+                                </td>
+                                <td ng-show="roomDiscountInfo.length==0">
+                                   
+                                </td>
+                                <td ng-show="roomDiscountInfo.length==0">
+                                    
+                                </td>
+                            </tr>
+
+
+
+                        </tbody>
+                    </table>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div id="costBreakDown" class="modal fade" role="dialog" tabindex="-1">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Cost Break Down</h4>
+                </div>
+                <div class="modal-body well">
+
+                   
+
+                    <table class="table table-inverse">
+                        <thead>
+                            <tr>
+                                <th> Room No  </th>
+                                <th> Day  </th>
+                               
+                                <th> Prize  </th>
+                                <th> Discount(%)  </th>
+                                <th> Discount Amount  </th>
+                                <th> Prize after Discount  </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-show="temptotalBill.length!=0" ng-repeat="ttotalBill in temptotalBill">
+                                <td>
+                                    {{ttotalBill.RoomNo }}
+                                </td>
+                                <td>
+                                    1
+                                </td>
+                                <td>
+                                    {{ttotalBill.Prize }}
+                                </td>
+                                <td>
+                                    {{ttotalBill.DiscountAmount }}
+                                </td>
+
+                                <td>
+                                    {{ttotalBill.DiscountAmountValue }}
+                                </td>
+                                <td>
+                                    {{ttotalBill.PrizeAfterDiscounted }}
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td ng-show="ttotalBill.length==0">
+                                    No data available
+                                </td>
+                               
+                            </tr>
+
+
+
+                        </tbody>
+                    </table>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+</div>

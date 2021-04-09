@@ -1,0 +1,122 @@
+﻿
+<div >
+    <form name="userForm"  ng-controller="orderFormController">
+
+        <!-- NAME -->
+        <div class="form-group">
+            <label>Name</label>
+            <input type="text" name="name" class="form-control" ng-model="name" placeholder="ex. owlia " required>
+            <p ng-show="name.$invalid && !name.$pristine" class="help-block">You name is required.</p>
+        </div>
+
+        <!-- Cell -->
+        <div class="form-group">
+            <label>Cell </label>
+            <input type="text" name="cell" class="form-control" ng-model="cell" placeholder="ex. +88017202....." required>
+            <p ng-show="cell.$invalid && !cell.$pristine" class="help-block">Enter a valid Cell Number.</p>
+        </div>
+
+
+        <!-- EMAIL -->
+        <div class="form-group">
+            <label>Email</label>
+            <input type="email" name="email" class="form-control" ng-model="email" placeholder="ex. youremail@gmail.com" required>
+            <p ng-show="email.$invalid && !email.$pristine" class="help-block">Enter a valid email.</p>
+        </div>
+
+        <div class="form-group">
+            <label>Skype</label>
+            <input type="text" name="skypeAddress" class="form-control" ng-model="skypeAddress" placeholder="ex. yourskype [Optional]" >
+        </div>
+
+        <div class="form-group">
+            <label>IMO</label>
+            <input type="text" name="IMOAddress" class="form-control" ng-model="imoAddress" placeholder="ex. yourimo [Optional]">
+        </div>
+
+        <div class="form-group">
+            <label>Description </label>
+            <textarea name="description" class="form-control" rows="15" ng-model="description" placeholder="ex. hospital based software" required> </textarea>
+        </div>
+
+        <!-- Number of days  -->
+        <div class="form-group">
+            <label> Days you can wait to produce your software </label>
+            <input type="text" name="numberOfDays" class="form-control" ng-model="numberOfDays" placeholder="ex. 15 " required>
+            <p ng-show="numberOfDays.$invalid && !numberOfDays.$pristine" class="help-block">Enter a valid  Number of Days to produce your software.</p>
+        </div>
+
+        <!-- budget  -->
+        <div class="form-group">
+            <label>Your Budget</label>
+            <input type="text" name="budget" class="form-control" ng-model="budget" placeholder="ex. 5000 " required>
+            <p ng-show="budget.$invalid && !budget.$pristine" class="help-block">Enter your Budget.</p>
+        </div>
+        <!-- Currecy  -->
+        <div class="form-group">
+            <label>Your Budget currency </label>
+            <input type="text" name="budgetCurrency" class="form-control" ng-model="budgetCurrency" placeholder="ex. USD " required>
+            <p ng-show="budgetCurrency.$invalid && !budgetCurrency.$pristine" class="help-block">Enter your Budget Currency </p>
+        </div>
+
+
+
+        <div class="form-group">
+            <label>File to illustrate your requirement [optional]  </label>
+            <input type="file" id="file" name="file" multiple onchange="angular.element(this).scope().setFile(this)"
+                   accept="image/*" class="btn alert-success" ng-disabled="userForm.$invalid" />
+        </div>
+        <div class="form-group">
+            <button ng-click="UploadFile()" class="btn btn-primary" ng-disabled="userForm.$invalid">Upload File</button>
+        </div>
+
+        <div class="form-group">
+
+            <div class="col-md-12">
+                <table class="table table-bordered table-">
+                    <thead>
+                        <tr>
+                            <th class="col-md-6">File Name</th>
+                            <th class="col-md-2">File Type</th>
+
+                            <th class="col-md-2">File Size</th>
+
+                            <th class="col-md-2">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="file in fileListAll">
+
+                            <td>{{file.file.name}}</td>
+                            <td>{{file.file.type}}</td>
+                            <td>{{file.file.size}}</td>
+
+
+                            <td>
+
+                                <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-trash" ng-click="DeleteFile(file)"></span></button>
+                            </td>
+
+
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+      
+
+        <div data-loading>
+            Please wait...
+        </div>
+  
+
+        <button class="btn btn-primary" ng-click="FormDataSave()" >Save</button>
+        <button class="btn btn-warning" ng-click="FormCancel()">Cancel</button>
+        <button class="btn btn-primary" ng-click="FormReset()"><span class="glyphicon glyphicon-refresh"></span> Refresh</button>
+
+    </form>
+
+</div>

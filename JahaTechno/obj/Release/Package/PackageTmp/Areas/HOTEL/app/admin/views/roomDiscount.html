@@ -1,0 +1,198 @@
+﻿<div class="row" ng-controller="roomDiscountCtrl" style="background-color: #00bcd4;">
+    <div class="col-md-12">
+        <div class="alert alert-danger" ng-show="roomDiscountError">
+            <strong>Error: </strong> {{roomDiscountError}}
+        </div>
+        <h3>Room Discount</h3>
+        <div class="text-right" style="margin-bottom:10px;">
+            <button type="button" class="btn btn-default" ng-click="createRoomDiscount()">Create new</button>
+        </div>
+
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>RoomNo</th>
+                    <th>DiscountAmount</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Edit/Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="roomDiscount in model.allRoomDiscount">
+                    <td>{{roomDiscount.RoomNo}}</td>
+                    <td>{{roomDiscount.DiscountAmount}}</td>
+                    <td>{{roomDiscount.FromDate | date : 'yyyy-MM-dd'  }}</td>
+                    <td>{{roomDiscount.ToDate | date :'yyyy-MM-dd'  }}</td>
+                    <td style="width:150px;text-align:center">
+                        <button type="button" ng-click="edit(roomDiscount)" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></button>
+                        <button type="button" ng-click="delete(roomDiscount)" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+
+    </div>
+    <div class="modal fade" tabindex="-1" role="dialog" id="addRoomDiscount">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-primary">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title"><i class="glyphicon glyphicon-plus-sign"></i> Create new Room Discount</h4>
+                </div>
+                <div class="alert alert-danger" ng-show="roomDiscountError">
+                    <strong>Error: </strong> {{roomDiscountError}}
+                </div>
+                <div class="modal-body">
+                    <form name="addRoomDiscountForm" id="addRoomDiscountForm">
+
+                      
+                        <div class="form-group">
+                            <label class="control-label">Room No</label>
+                            <!--<input type="text" class="form-control" ng-model="newRoomDiscount.RoomNo" required />-->
+
+                            <select class="form-control" ng-options="r for r in GetExistRoomValid" ng-model="newRoomDiscount.RoomNo">
+                            </select>
+
+
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="control-label">Discount(%)</label>
+                            <input type="text" class="form-control" ng-model="newRoomDiscount.DiscountAmount" required />
+                        </div>
+
+
+                        <div class="form-group col-xs-6">
+                            <label class="control-label">From Date</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" ng-model="newRoomDiscount.FromDate" is-open="popup.opened" datepicker-options="dateOptions" ng-change="checkFromdateTodate(newRoomDiscount.FromDate,newRoomDiscount.ToDate)" required />
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="openfn()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-xs-6">
+                            <label class="control-label">To Date</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" ng-model="newRoomDiscount.ToDate" is-open="popup2.opened"  datepicker-options="dateOptions" ng-change="checkFromdateTodate(newRoomDiscount.FromDate,newRoomDiscount.ToDate)" required />
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="openfn2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                </span>
+                            </div>
+                        </div>
+
+
+                    </form>
+                </div>
+                <div data-loading>
+                    Please wait...
+                </div>
+
+                <div class="form-group">
+                 ***** Customers will get discount if booking is made From Date to  To Date
+                </div>
+
+                <div class="modal-footer">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" form="addRoomDiscountForm" ng-disabled="addRoomDiscountForm.$invalid" ng-click="saveRoomDiscount()">Save changes</button>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="editRoomDiscount">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-info">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title"><i class="glyphicon glyphicon-pencil"></i> Edit Room Discount</h4>
+                </div>
+                <div class="modal-body">
+                    <!--<p>One fine body&hellip;</p>-->
+                    <form name="editRoomDiscount" id="editRoomDiscount">
+
+
+                        <div class="form-group">
+                            <label class="control-label">Room No</label>
+                            <input type="text" class="form-control" ng-model="temp.RoomNo" ng-disabled="true" required />
+
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Discount(%)</label>
+                            <input type="text" class="form-control" ng-model="temp.DiscountAmount" required />
+                        </div>
+
+                        <div class="form-group">
+
+                            <div class="form-group col-xs-6">
+                                <label class="control-label">From Date</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" ng-model="temp.FromDate" is-open="popup.opened" datepicker-options="dateOptions" required />
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" ng-click="openfn()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                            <div class="form-group col-xs-6">
+                                <label class="control-label">To Date</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" ng-model="temp.ToDate" is-open="popup2.opened" datepicker-options="dateOptions" required />
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" ng-click="openfn2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </form>
+                </div>
+                <div data-loading>
+                    Please wait...
+                </div>
+                <div class="form-group">
+                    ***** Customers will get discount if booking is made From Date to  To Date
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" form="editRoomDiscount" ng-disabled="editRoomDiscount.$invalid" ng-click="UpdateRoomDiscount()">Save changes</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="deleteRoomDiscount">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-warning">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title"><i class="glyphicon glyphicon-trash"></i> Confirm delete!</h4>
+                </div>
+                <div class="modal-body">
+                    <!--<p>One fine body&hellip;</p>-->
+                    <p>Are you sure want to delete this Route</p>
+                </div>
+                <div data-loading>
+                    Please wait...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" ng-click="deleteRoomDiscount()">Save changes</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div>

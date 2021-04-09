@@ -1,0 +1,117 @@
+﻿<div class="row" ng-controller="roomVatCtrl" style="background-color: #00bcd4;">
+    <div class="col-md-12">
+        <div class="alert alert-danger" ng-show="roomVatError">
+            <strong>Error: </strong> {{roomVatError}}
+        </div>
+        <h3>Vat </h3>
+        <div class="text-right" style="margin-bottom:10px;">
+            <button type="button" class="btn btn-default" ng-click="createVat()">Create new</button>
+        </div>
+
+
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Order No.</th>
+                    <th>Vat(%)</th>
+                    <th>Active Date</th>
+                    <th> Delete </th>
+               
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="allVat in model.allVats">
+                    <td>{{allVat.RoomVatId}}</td>
+                    <td>{{allVat.VatAmount}}</td>
+                    <td>{{allVat.FromActiveDate | date : 'yyyy-MM-dd'  }}</td>
+                    
+                    <td style="width:150px;text-align:center">
+                        <button type="button" ng-click="delete(allVat)" class="btn btn-default">
+                        <span class="glyphicon glyphicon-trash"></span></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+
+    </div>
+    <div class="modal fade" tabindex="-1" role="dialog" id="addCreateVat">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-primary">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title"><i class="glyphicon glyphicon-plus-sign"></i> Create new Vat</h4>
+                </div>
+                <div class="alert alert-danger" ng-show="roomVatError">
+                    <strong>Error: </strong> {{roomVatError}}
+                </div>
+                <div class="modal-body">
+                    <form name="addCreateVatForm" id="addCreateVatForm">
+
+                     
+
+
+                        <div class="form-group">
+                            <label class="control-label">Vat(%)</label>
+                            <input type="text" class="form-control" ng-model="newRoomVat.VatAmount" required />
+                        </div>
+
+
+                        <div class="form-group col-xs-6">
+                            <label class="control-label">From Active Date</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" ng-model="newRoomVat.FromActiveDate" is-open="popup.opened" datepicker-options="dateOptions"  required />
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="openfn()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                </span>
+                            </div>
+                        </div>
+
+
+
+                    </form>
+                </div>
+                <div data-loading>
+                    Please wait...
+                </div>
+
+               
+
+                <div class="modal-footer">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" form="addCreateVatForm" ng-disabled="addCreateVatForm.$invalid" ng-click="saveVat()">Save changes</button>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
+  
+
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="deleteVat">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-warning">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title"><i class="glyphicon glyphicon-trash"></i> Confirm delete!</h4>
+                </div>
+                <div class="modal-body">
+                    <!--<p>One fine body&hellip;</p>-->
+                    <p>Are you sure want to delete this Route</p>
+                </div>
+                <div data-loading>
+                    Please wait...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" ng-click="deleteVat()">Save changes</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div>

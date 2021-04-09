@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="JahaTechnoModelStoreContainer" CdmEntityContainer="JahaTechnoEntities">
+    <EntitySetMapping Name="HotelManagement_BookingPersonInfo">
+      <EntityTypeMapping TypeName="JahaTechnoModel.HotelManagement_BookingPersonInfo">
+        <MappingFragment StoreEntitySet="HotelManagement_BookingPersonInfo">
+          <ScalarProperty Name="BookingPersonInfoId" ColumnName="BookingPersonInfoId" />
+          <ScalarProperty Name="firstName" ColumnName="firstName" />
+          <ScalarProperty Name="lastName" ColumnName="lastName" />
+          <ScalarProperty Name="cell" ColumnName="cell" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="skypeAddress" ColumnName="skypeAddress" />
+          <ScalarProperty Name="IMOAddress" ColumnName="IMOAddress" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HotelManagement_HotelMaster">
+      <EntityTypeMapping TypeName="JahaTechnoModel.HotelManagement_HotelMaster">
+        <MappingFragment StoreEntitySet="HotelManagement_HotelMaster">
+          <ScalarProperty Name="RoomID" ColumnName="RoomID" />
+          <ScalarProperty Name="RoomNo" ColumnName="RoomNo" />
+          <ScalarProperty Name="RoomType" ColumnName="RoomType" />
+          <ScalarProperty Name="Prize" ColumnName="Prize" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HotelManagement_RoomBooking">
+      <EntityTypeMapping TypeName="JahaTechnoModel.HotelManagement_RoomBooking">
+        <MappingFragment StoreEntitySet="HotelManagement_RoomBooking">
+          <ScalarProperty Name="BookingID" ColumnName="BookingID" />
+          <ScalarProperty Name="BookingPersonInfoId" ColumnName="BookingPersonInfoId" />
+          <ScalarProperty Name="RoomID" ColumnName="RoomID" />
+          <ScalarProperty Name="BookedDateFR" ColumnName="BookedDateFR" />
+          <ScalarProperty Name="BookedDateTO" ColumnName="BookedDateTO" />
+          <ScalarProperty Name="BookingStatus" ColumnName="BookingStatus" />
+          <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
+          <ScalarProperty Name="AdvancePayed" ColumnName="AdvancePayed" />
+          <ScalarProperty Name="TotalAmountPayed" ColumnName="TotalAmountPayed" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="USP_HotelManagement_BookingPersonInfo_Insert" FunctionName="JahaTechnoModel.Store.USP_HotelManagement_BookingPersonInfo_Insert" />
+    <FunctionImportMapping FunctionImportName="USP_HotelManagement_BookingPersonInfo_Select" FunctionName="JahaTechnoModel.Store.USP_HotelManagement_BookingPersonInfo_Select">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="JahaTechnoModel.USP_HotelManagement_BookingPersonInfo_Select_Result">
+          <ScalarProperty Name="BookingPersonInfoId" ColumnName="BookingPersonInfoId" />
+          <ScalarProperty Name="firstName" ColumnName="firstName" />
+          <ScalarProperty Name="lastName" ColumnName="lastName" />
+          <ScalarProperty Name="cell" ColumnName="cell" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="skypeAddress" ColumnName="skypeAddress" />
+          <ScalarProperty Name="IMOAddress" ColumnName="IMOAddress" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="USP_HOTELManagement_Hotel_Delete" FunctionName="JahaTechnoModel.Store.USP_HOTELManagement_Hotel_Delete" />
+    <FunctionImportMapping FunctionImportName="USP_HOTELManagement_Hotel_Insert" FunctionName="JahaTechnoModel.Store.USP_HOTELManagement_Hotel_Insert" />
+    <FunctionImportMapping FunctionImportName="USP_HOTELManagement_HotelMaster_Select" FunctionName="JahaTechnoModel.Store.USP_HOTELManagement_HotelMaster_Select">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="JahaTechnoModel.USP_HOTELManagement_HotelMaster_Select_Result">
+          <ScalarProperty Name="RoomID" ColumnName="RoomID" />
+          <ScalarProperty Name="RoomNo" ColumnName="RoomNo" />
+          <ScalarProperty Name="RoomType" ColumnName="RoomType" />
+          <ScalarProperty Name="Prize" ColumnName="Prize" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="USP_HOTELManagement_HotelStatus_Select" FunctionName="JahaTechnoModel.Store.USP_HOTELManagement_HotelStatus_Select">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="JahaTechnoModel.USP_HOTELManagement_HotelStatus_Select_Result">
+          <ScalarProperty Name="RoomNo" ColumnName="RoomNo" />
+          <ScalarProperty Name="BookedDateFR" ColumnName="BookedDateFR" />
+          <ScalarProperty Name="BookedDateTO" ColumnName="BookedDateTO" />
+          <ScalarProperty Name="BookingStatus" ColumnName="BookingStatus" />
+          <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
+          <ScalarProperty Name="AdvancePayed" ColumnName="AdvancePayed" />
+          <ScalarProperty Name="TotalAmountPayed" ColumnName="TotalAmountPayed" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="USP_HOTELManagement_RoomBooking_Delete" FunctionName="JahaTechnoModel.Store.USP_HOTELManagement_RoomBooking_Delete" />
+    <FunctionImportMapping FunctionImportName="USP_HOTELManagement_RoomBooking_Insert" FunctionName="JahaTechnoModel.Store.USP_HOTELManagement_RoomBooking_Insert" />
+    <FunctionImportMapping FunctionImportName="USP_HOTELManagement_RoomBooking_SelectALL" FunctionName="JahaTechnoModel.Store.USP_HOTELManagement_RoomBooking_SelectALL">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="JahaTechnoModel.USP_HOTELManagement_RoomBooking_SelectALL_Result">
+          <ScalarProperty Name="RoomNo" ColumnName="RoomNo" />
+          <ScalarProperty Name="BookingID" ColumnName="BookingID" />
+          <ScalarProperty Name="RoomID" ColumnName="RoomID" />
+          <ScalarProperty Name="BookedDateFR" ColumnName="BookedDateFR" />
+          <ScalarProperty Name="BookedDateTO" ColumnName="BookedDateTO" />
+          <ScalarProperty Name="BookingStatus" ColumnName="BookingStatus" />
+          <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
+          <ScalarProperty Name="AdvancePayed" ColumnName="AdvancePayed" />
+          <ScalarProperty Name="TotalAmountPayed" ColumnName="TotalAmountPayed" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="USP_HOTELManagement_RoomBooking_SelectBasedFromDate" FunctionName="JahaTechnoModel.Store.USP_HOTELManagement_RoomBooking_SelectBasedFromDate">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="JahaTechnoModel.USP_HOTELManagement_RoomBooking_SelectBasedFromDate_Result">
+          <ScalarProperty Name="RoomNo" ColumnName="RoomNo" />
+          <ScalarProperty Name="BookingID" ColumnName="BookingID" />
+          <ScalarProperty Name="BookingPersonInfoId" ColumnName="BookingPersonInfoId" />
+          <ScalarProperty Name="RoomID" ColumnName="RoomID" />
+          <ScalarProperty Name="BookedDateFR" ColumnName="BookedDateFR" />
+          <ScalarProperty Name="BookedDateTO" ColumnName="BookedDateTO" />
+          <ScalarProperty Name="BookingStatus" ColumnName="BookingStatus" />
+          <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
+          <ScalarProperty Name="AdvancePayed" ColumnName="AdvancePayed" />
+          <ScalarProperty Name="TotalAmountPayed" ColumnName="TotalAmountPayed" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="USP_HOTELManagement_RoomBooking_TotalBill_FromDateAndToDate" FunctionName="JahaTechnoModel.Store.USP_HOTELManagement_RoomBooking_TotalBill_FromDateAndToDate">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="JahaTechnoModel.USP_HOTELManagement_RoomBooking_TotalBill_FromDateAndToDate_Result">
+          <ScalarProperty Name="returnDataId" ColumnName="returnDataId" />
+          <ScalarProperty Name="RoomNo" ColumnName="RoomNo" />
+          <ScalarProperty Name="FromDate" ColumnName="FromDate" />
+          <ScalarProperty Name="ToDate" ColumnName="ToDate" />
+          <ScalarProperty Name="Prize" ColumnName="Prize" />
+          <ScalarProperty Name="DiscountAmount" ColumnName="DiscountAmount" />
+          <ScalarProperty Name="DiscountAmountValue" ColumnName="DiscountAmountValue" />
+          <ScalarProperty Name="PrizeAfterDiscounted" ColumnName="PrizeAfterDiscounted" />
+          <ScalarProperty Name="totalPrizeAfterDiscounted" ColumnName="totalPrizeAfterDiscounted" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="USP_HOTELManagement_RoomExist" FunctionName="JahaTechnoModel.Store.USP_HOTELManagement_RoomExist" />
+    <FunctionImportMapping FunctionImportName="USP_HOTELManagement_RoomValid" FunctionName="JahaTechnoModel.Store.USP_HOTELManagement_RoomValid" />
+  </EntityContainerMapping>
+</Mapping>

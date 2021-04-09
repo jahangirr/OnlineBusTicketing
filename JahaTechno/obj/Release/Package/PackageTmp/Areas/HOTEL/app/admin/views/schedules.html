@@ -1,0 +1,125 @@
+﻿<div class="row" ng-controller="scheduleCtrl" style="background-color: #00bcd4;">
+
+
+    <div class="col-md-12">
+        <div class="alert alert-danger" ng-show="scheduleError">
+            <strong>Error: </strong> {{scheduleError}}
+        </div>
+        <form name="dateform">
+            <div class="col-md-3">
+            <button class="btn btn-default btn-toolbar" ng-click="createNewSchedule()">Add New Schedule</button></div>
+            <div class="form-group col-md-3 col-md-offset-5">
+                <div class="input-group">
+                    <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" ng-model="scheduleDate" is-open="popup.opened" datepicker-options="dateOptions" />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="openfn()">
+                             <i class="glyphicon glyphicon-calendar"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <input type="submit" class="btn btn-default" value="Show" ng-click="show()" />
+            </div>
+        </form>
+    </div>
+    <div class="col-md-12">
+        <h2>Schedule of date: ({{scheduleDate|date:'yyyy-MM-dd'}})</h2>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>From</th>
+                    <th>Destination</th>
+                    <th>Departure Time  </th> 
+                    <th>Bus Number</th>
+                    <th>Bus Type</th>
+                    <th>Total Seats/Booked</th>
+                    <th>Available Seats</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="schedule in model.dateSchedules">
+                    <td>{{schedule.BusRoute.From}}</td>
+                    <td>{{schedule.BusRoute.To}}</td>
+                    <td>{{schedule.DepartDateTime|date:'yyyy-MM-dd h:mma'}}</td>
+                    <td>{{schedule.Bus.CoachNo}}</td>
+                    <td>{{schedule.Bus.BusType}}</td>
+                    <td>40/{{schedule.Bookings.length}}</td>
+                    <td>{{40-schedule.Bookings.length}}</td>
+                    <td><button type="button" ng-click="deleteSchedule(schedule.ScheduleId)" class="btn btn-default" title="Delete" ng-disabled="schedule.Bookings.length>0"><span class="glyphicon glyphicon-trash"></span></button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="modal fade" tabindex="-1" role="dialog" id="addNewSchedule">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-primary">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title"><i class="glyphicon glyphicon-time"></i> Create Schedule</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="col-xs-12 clearfix">
+                        <form name="formCreateSchedule" id="formCreateSchedule" novalidate>
+                          
+                            <div class="row">
+                                <div class="form-group col-xs-6">
+                                    <label class="control-label">Bus</label>
+                                    <select required class="form-control" ng-model="newSchedule.busId" ng-options="s.BusId as s.CoachNo + ' [' + s.BusType+ ']' for s in model.buses"></select>
+                                </div>
+                                <div class="form-group col-xs-6">
+                                    <label class="control-label">Bus Route</label>
+                                    <select required class="form-control" ng-model="newSchedule.busRouteId" ng-options="x.BusRouteId as x.From + '-' + x.To for x in model.busRoutes"></select>
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="form-group col-xs-6">
+                                    <label class="control-label">Schedule Date</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" ng-model="newSchedule.date" is-open="popup2.opened" datepicker-options="dateOptions" required />
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="openfn2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group col-xs-6">
+                                    <label class="control-label">Time</label>
+                                    <div uib-timepicker ng-model="newSchedule.time" ng-change="changed()" hour-step="1" minute-step="1" show-meridian="ismeridian" show-arrowkeys="true" show-spinners="true"></div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div data-loading>
+                    Please wait...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" form="formCreateSchedule" ng-disabled="formCreateSchedule.$invalid" ng-click="insertSchedule()"> Save changes</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="deleteSchedule">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-danger">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title"><i class="glyphicon glyphicon-trash"></i> Confirm delete.</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure to delete the item?</p>
+                </div>
+                <div data-loading>
+                    Please wait...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-warning" ng-click="deleteScheduleConfirmed()">Delete</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div>

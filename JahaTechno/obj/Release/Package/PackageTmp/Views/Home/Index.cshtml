@@ -1,0 +1,55 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div style="height:100px;">
+
+
+</div>
+
+<ng-view></ng-view>
+@section scripts
+{
+    <script src="~/Scripts/angular.js"></script>
+    <script src="~/Scripts/angular-animate.js"></script>
+    <script src="~/Scripts/loading-bar.js"></script>
+    <script src="~/Scripts/angular-ui/ui-bootstrap.js"></script>
+    <script src="~/Scripts/angular-ui/ui-bootstrap-tpls.js"></script>
+    <script src="~/Scripts/angular-touch.js"></script>
+    <script src="~/Scripts/angular-route.js"></script>
+    <script>
+        angular.module("commonApp", ['ngRoute', 'angular-loading-bar', 'ui.bootstrap'])
+            .directive('loading', ['$http', function ($http) {
+                return {
+                    restrict: 'A',
+                    link: function (scope, elm, attrs) {
+                        scope.isLoading = function () {
+                            return $http.pendingRequests.length > 0;
+                        };
+                        scope.$watch(scope.isLoading, function (v) {
+                            if (v) {
+                                elm.show();
+                            } else {
+                                elm.hide();
+                            }
+                        });
+                    }
+                };
+            }]).config(function ($routeProvider) {
+                $routeProvider.when("/home", { templateUrl: "/Common/Views/home.html" });
+                $routeProvider.when("/login", { templateUrl: "/Common/Views/login.html" });
+                $routeProvider.when("/register", { templateUrl: "/Common/Views/register.html" });
+                $routeProvider.when("/contact", { templateUrl: "/Common/Views/contact.html" });
+                $routeProvider.when("/order", { templateUrl: "/Common/Views/order.html" });
+                $routeProvider.otherwise({ templateUrl: "/Common/Views/home.html" });
+            });
+    </script>
+    <script src="~/Common/Controllers/commonCtrl.js"></script>
+    <script src="~/Common/Controllers/orderCtrl.js"></script>
+    <script src="~/Common/services/apiCallSvc.js"></script>
+    <script src="~/Common/services/authLocalStorageSvc.js"></script>
+    <script src="~/Common/services/loginSvc.js"></script>
+
+
+}
+

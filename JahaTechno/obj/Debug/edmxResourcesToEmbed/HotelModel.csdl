@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="JahaTechnoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="HotelManagement_BookingPersonInfo">
+    <Key>
+      <PropertyRef Name="BookingPersonInfoId" />
+    </Key>
+    <Property Name="BookingPersonInfoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="firstName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="lastName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="cell" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="skypeAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="IMOAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="HotelManagement_HotelMaster">
+    <Key>
+      <PropertyRef Name="RoomID" />
+    </Key>
+    <Property Name="RoomID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RoomNo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="RoomType" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Prize" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="HotelManagement_RoomBooking">
+    <Key>
+      <PropertyRef Name="BookingID" />
+    </Key>
+    <Property Name="BookingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BookingPersonInfoId" Type="Int32" Nullable="false" />
+    <Property Name="RoomID" Type="Int32" Nullable="false" />
+    <Property Name="BookedDateFR" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="BookedDateTO" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="BookingStatus" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PaymentStatus" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="AdvancePayed" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TotalAmountPayed" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="JahaTechnoEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="HotelManagement_BookingPersonInfo" EntityType="Self.HotelManagement_BookingPersonInfo" />
+    <EntitySet Name="HotelManagement_HotelMaster" EntityType="Self.HotelManagement_HotelMaster" />
+    <EntitySet Name="HotelManagement_RoomBooking" EntityType="Self.HotelManagement_RoomBooking" />
+    <FunctionImport Name="USP_HotelManagement_BookingPersonInfo_Insert" ReturnType="Collection(String)">
+      <Parameter Name="firstName" Mode="In" Type="String" />
+      <Parameter Name="lastName" Mode="In" Type="String" />
+      <Parameter Name="cell" Mode="In" Type="String" />
+      <Parameter Name="email" Mode="In" Type="String" />
+      <Parameter Name="skypeAddress" Mode="In" Type="String" />
+      <Parameter Name="IMOAddress" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="USP_HotelManagement_BookingPersonInfo_Select" ReturnType="Collection(JahaTechnoModel.USP_HotelManagement_BookingPersonInfo_Select_Result)">
+      <Parameter Name="BookingPersonInfoId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="USP_HOTELManagement_Hotel_Delete" ReturnType="Collection(String)">
+      <Parameter Name="DeleteRoomNo" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="USP_HOTELManagement_Hotel_Insert" ReturnType="Collection(String)">
+      <Parameter Name="RoomNo" Mode="In" Type="String" />
+      <Parameter Name="RoomType" Mode="In" Type="String" />
+      <Parameter Name="Prize" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="USP_HOTELManagement_HotelMaster_Select" ReturnType="Collection(JahaTechnoModel.USP_HOTELManagement_HotelMaster_Select_Result)">
+      <Parameter Name="RoomNo" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="USP_HOTELManagement_HotelStatus_Select" ReturnType="Collection(JahaTechnoModel.USP_HOTELManagement_HotelStatus_Select_Result)">
+      <Parameter Name="RoomNo" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="USP_HOTELManagement_RoomBooking_Delete" ReturnType="Collection(String)">
+      <Parameter Name="BookingID" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="USP_HOTELManagement_RoomBooking_Insert" ReturnType="Collection(String)">
+      <Parameter Name="BookingID" Mode="In" Type="String" />
+      <Parameter Name="BookingPersonInfoId" Mode="In" Type="String" />
+      <Parameter Name="RoomID" Mode="In" Type="String" />
+      <Parameter Name="BookedDateFR" Mode="In" Type="String" />
+      <Parameter Name="BookedDateTO" Mode="In" Type="String" />
+      <Parameter Name="BookingStatus" Mode="In" Type="String" />
+      <Parameter Name="PaymentStatus" Mode="In" Type="String" />
+      <Parameter Name="AdvancePayed" Mode="In" Type="String" />
+      <Parameter Name="TotalAmountPayed" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="USP_HOTELManagement_RoomBooking_SelectALL" ReturnType="Collection(JahaTechnoModel.USP_HOTELManagement_RoomBooking_SelectALL_Result)">
+      <Parameter Name="RoomID" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="USP_HOTELManagement_RoomBooking_SelectBasedFromDate" ReturnType="Collection(JahaTechnoModel.USP_HOTELManagement_RoomBooking_SelectBasedFromDate_Result)">
+      <Parameter Name="RoomID" Mode="In" Type="String" />
+      <Parameter Name="BookedDateFR" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="USP_HOTELManagement_RoomBooking_TotalBill_FromDateAndToDate" ReturnType="Collection(JahaTechnoModel.USP_HOTELManagement_RoomBooking_TotalBill_FromDateAndToDate_Result)">
+      <Parameter Name="RoomNo" Mode="In" Type="String" />
+      <Parameter Name="BookedDateFR" Mode="In" Type="String" />
+      <Parameter Name="BookedDateTO" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="USP_HOTELManagement_RoomExist" ReturnType="Collection(String)" />
+    <FunctionImport Name="USP_HOTELManagement_RoomValid" ReturnType="Collection(String)" />
+  </EntityContainer>
+  <ComplexType Name="USP_HotelManagement_BookingPersonInfo_Select_Result">
+    <Property Type="Int32" Name="BookingPersonInfoId" Nullable="false" />
+    <Property Type="String" Name="firstName" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="lastName" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="cell" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="email" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="skypeAddress" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="IMOAddress" Nullable="true" MaxLength="100" />
+  </ComplexType>
+  <ComplexType Name="USP_HOTELManagement_HotelMaster_Select_Result">
+    <Property Type="Int32" Name="RoomID" Nullable="false" />
+    <Property Type="String" Name="RoomNo" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="RoomType" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="Prize" Nullable="false" MaxLength="100" />
+  </ComplexType>
+  <ComplexType Name="USP_HOTELManagement_HotelStatus_Select_Result">
+    <Property Type="String" Name="RoomNo" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="BookedDateFR" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="BookedDateTO" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="BookingStatus" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="PaymentStatus" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="AdvancePayed" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="TotalAmountPayed" Nullable="false" MaxLength="100" />
+  </ComplexType>
+  <ComplexType Name="USP_HOTELManagement_RoomBooking_SelectALL_Result">
+    <Property Type="String" Name="RoomNo" Nullable="false" MaxLength="100" />
+    <Property Type="Int32" Name="BookingID" Nullable="false" />
+    <Property Type="Int32" Name="RoomID" Nullable="false" />
+    <Property Type="String" Name="BookedDateFR" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="BookedDateTO" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="BookingStatus" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="PaymentStatus" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="AdvancePayed" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="TotalAmountPayed" Nullable="false" MaxLength="100" />
+  </ComplexType>
+  <ComplexType Name="USP_HOTELManagement_RoomBooking_SelectBasedFromDate_Result">
+    <Property Type="String" Name="RoomNo" Nullable="false" MaxLength="100" />
+    <Property Type="Int32" Name="BookingID" Nullable="false" />
+    <Property Type="Int32" Name="BookingPersonInfoId" Nullable="false" />
+    <Property Type="Int32" Name="RoomID" Nullable="false" />
+    <Property Type="String" Name="BookedDateFR" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="BookedDateTO" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="BookingStatus" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="PaymentStatus" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="AdvancePayed" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="TotalAmountPayed" Nullable="false" MaxLength="100" />
+  </ComplexType>
+  <ComplexType Name="USP_HOTELManagement_RoomBooking_TotalBill_FromDateAndToDate_Result">
+    <Property Type="Int32" Name="returnDataId" Nullable="false" />
+    <Property Type="Int32" Name="RoomNo" Nullable="true" />
+    <Property Type="DateTime" Name="FromDate" Nullable="true" />
+    <Property Type="DateTime" Name="ToDate" Nullable="true" />
+    <Property Type="Decimal" Name="Prize" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="DiscountAmount" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="DiscountAmountValue" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="PrizeAfterDiscounted" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="totalPrizeAfterDiscounted" Nullable="true" Precision="18" Scale="2" />
+  </ComplexType>
+</Schema>

@@ -1,0 +1,48 @@
+﻿<div class="row" ng-controller="userCtrl" style="background-color: #00bcd4;">
+
+
+  
+     <div class="col-md-12">
+        <div class="alert alert-danger" ng-show="userError">
+            <strong>Error: </strong> {{userError}}
+        </div>
+
+    </div>
+    <div class="col-md-12">
+        <h4>Register new user</h4>
+        <form class="form-horizontal" role="form" id="regform">
+            <div class="form-group">
+                <label class="col-md-2 control-label">Email</label>
+                <input class="form-control normal" ng-model="userInfo.Email" />
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Password</label>
+                <input type="password" class="form-control normal" ng-model="userInfo.Password" />
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Confirm Password</label>
+                <input type="password" class="form-control normal" ng-model="userInfo.ConfirmPassword" />
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" class="btn btn-default" value="Register"  ng-click="register()"/>
+                </div>
+            </div>
+        </form>
+        <h3>Current users</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="user in model.users">
+                    <td>{{user.UserName}}</td>
+                    <td>{{user.Email}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

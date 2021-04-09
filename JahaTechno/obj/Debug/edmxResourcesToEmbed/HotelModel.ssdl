@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="JahaTechnoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="HotelManagement_BookingPersonInfo">
+    <Key>
+      <PropertyRef Name="BookingPersonInfoId" />
+    </Key>
+    <Property Name="BookingPersonInfoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="firstName" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="lastName" Type="varchar" MaxLength="100" />
+    <Property Name="cell" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="email" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="skypeAddress" Type="varchar" MaxLength="100" />
+    <Property Name="IMOAddress" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="HotelManagement_HotelMaster">
+    <Key>
+      <PropertyRef Name="RoomID" />
+    </Key>
+    <Property Name="RoomID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoomNo" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="RoomType" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Prize" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="HotelManagement_RoomBooking">
+    <Key>
+      <PropertyRef Name="BookingID" />
+    </Key>
+    <Property Name="BookingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BookingPersonInfoId" Type="int" Nullable="false" />
+    <Property Name="RoomID" Type="int" Nullable="false" />
+    <Property Name="BookedDateFR" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="BookedDateTO" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="BookingStatus" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="PaymentStatus" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="AdvancePayed" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="TotalAmountPayed" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <Function Name="USP_HotelManagement_BookingPersonInfo_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="firstName" Type="varchar" Mode="In" />
+    <Parameter Name="lastName" Type="varchar" Mode="In" />
+    <Parameter Name="cell" Type="varchar" Mode="In" />
+    <Parameter Name="email" Type="varchar" Mode="In" />
+    <Parameter Name="skypeAddress" Type="varchar" Mode="In" />
+    <Parameter Name="IMOAddress" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="USP_HotelManagement_BookingPersonInfo_Select" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="BookingPersonInfoId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="USP_HOTELManagement_Hotel_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="DeleteRoomNo" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="USP_HOTELManagement_Hotel_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="RoomNo" Type="varchar" Mode="In" />
+    <Parameter Name="RoomType" Type="varchar" Mode="In" />
+    <Parameter Name="Prize" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="USP_HOTELManagement_HotelMaster_Select" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="RoomNo" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="USP_HOTELManagement_HotelStatus_Select" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="RoomNo" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="USP_HOTELManagement_RoomBooking_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="BookingID" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="USP_HOTELManagement_RoomBooking_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="BookingID" Type="varchar" Mode="In" />
+    <Parameter Name="BookingPersonInfoId" Type="varchar" Mode="In" />
+    <Parameter Name="RoomID" Type="varchar" Mode="In" />
+    <Parameter Name="BookedDateFR" Type="varchar" Mode="In" />
+    <Parameter Name="BookedDateTO" Type="varchar" Mode="In" />
+    <Parameter Name="BookingStatus" Type="varchar" Mode="In" />
+    <Parameter Name="PaymentStatus" Type="varchar" Mode="In" />
+    <Parameter Name="AdvancePayed" Type="varchar" Mode="In" />
+    <Parameter Name="TotalAmountPayed" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="USP_HOTELManagement_RoomBooking_SelectALL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="RoomID" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="USP_HOTELManagement_RoomBooking_SelectBasedFromDate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="RoomID" Type="varchar" Mode="In" />
+    <Parameter Name="BookedDateFR" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="USP_HOTELManagement_RoomBooking_TotalBill_FromDateAndToDate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="RoomNo" Type="varchar" Mode="In" />
+    <Parameter Name="BookedDateFR" Type="varchar" Mode="In" />
+    <Parameter Name="BookedDateTO" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="USP_HOTELManagement_RoomExist" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="USP_HOTELManagement_RoomValid" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <EntityContainer Name="JahaTechnoModelStoreContainer">
+    <EntitySet Name="HotelManagement_BookingPersonInfo" EntityType="Self.HotelManagement_BookingPersonInfo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HotelManagement_HotelMaster" EntityType="Self.HotelManagement_HotelMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HotelManagement_RoomBooking" EntityType="Self.HotelManagement_RoomBooking" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>

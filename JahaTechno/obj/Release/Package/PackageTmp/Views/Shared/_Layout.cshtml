@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html ng-app="commonApp">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - JahaTechno -- ...Simple Solution for business </title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <div class="navbar-brand" style="font-size:small" >   <div ng-controller="commonCtrl" ng-click="orderPage()" style="font-size:small"> Order </div>    </div>
+                <ul class="nav navbar-nav">
+                    <li id="products" class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Products <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li id="product1">
+                                @Html.ActionLink("Online Bus Ticketing [Admin]", "Index", "AdminBTMS", new { area = "BTMS" }, null)
+
+                            </li>
+                            <li id="product2">
+                                @Html.ActionLink("Online Bus Ticketing [User]", "Index", "HomeBTMS", new { area = "BTMS" }, null)
+
+                            </li>
+                            <li id="product3">
+                                @Html.ActionLink("Hotel Management [Admin]", "Index", "AdminHOTEL", new { area = "HOTEL" }, null)
+                            </li>
+                            <li id="product4">
+                                @Html.ActionLink("Hotel Management [User]", "Index", "HomeHOTEL", new { area = "HOTEL" }, null)
+                            </li>
+                            <li id="product5">
+                                @Html.ActionLink("SME Solution", "TwoColumn", "Portfolio")
+                            </li>
+                        </ul>
+                    </li>
+
+                </ul>
+
+            </div>
+         
+
+
+            <div class="nav navbar-nav navbar-right">  
+                <div ng-controller="commonCtrl">
+
+                   
+
+                    <div class="navbar-brand" >
+                        <div ng-click="ContactPage()" style="font-size:small" > Contact </div>
+                    </div>
+                    <div class="navbar-brand">
+                        <div ng-click="HomePage()" style="font-size:small" > Home </div>
+                    </div>
+                    <div class="navbar-brand">
+                        <div ng-show="!isRootScopeAuthenticated" ng-click="registerPage()" style="font-size:small" > Register </div>
+                    </div>
+
+                    <div class="navbar-brand">
+                        <div ng-show="!isRootScopeAuthenticated" ng-click="logingPage()" style="font-size:small" > SignIn </div>
+                    </div>
+
+                    <div ng-show="isRootScopeAuthenticated" class="navbar-brand" ng-click="signout()" ng-href="@Url.Action("Index", "Home", new { Area = "" })" style="font-size:small" >
+                        Sign Out
+                    </div>
+
+                </div>
+                
+                @*@Html.Partial("_LoginPartial")*@
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - JahaTechno  </p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
