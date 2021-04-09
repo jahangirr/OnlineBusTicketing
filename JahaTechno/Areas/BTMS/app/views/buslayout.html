@@ -1,0 +1,92 @@
+﻿<div class="row" ng-controller="bookingCtrl" style="background-color: #00bcd4;">
+    <div class="col-md-4 col-md-offset-2">
+        <h2>Choose your seat</h2>
+
+        
+        <table id="layout">
+            <tr ng-repeat="seat in model.seats" ng-if="$index%5==0" style="border-bottom:none">
+                <td class="text-center" ng-repeat="seat in model.seats.slice($index, $index+5)">
+                    <div ng-if="seat.seatNumber!=0">
+                        <a ng-show="seat.status=='available'" ng-click="selectSeat(seat)" class="btn btn-default">
+                        <img src="http://localhost:50162/Areas/BTMS/app/images/available_seat.gif" class="img-circle" />
+
+                            
+                        </a>
+                        <a ng-show="seat.status=='booked'" ng-click="selectSeat(seat)" class="btn btn-default">
+
+                        <img src="http://localhost:50162/Areas/BTMS/app/images/booked_seat.gif" class="img-circle" />
+                        </a>
+                        <a ng-show="seat.status=='selected'" ng-click="selectSeat(seat)" class="btn btn-default">
+
+                        <!--<img src="http://localhost:50162/Areas/BTMS/app/images/selected_seat.gif" class="img-circle" />-->
+
+                            <img src="http://localhost:50162/Areas/BTMS/app/images/selected_seat.gif" class="img-circle" />
+                        </a>
+                        <span class="badge" style="display:block">{{seat.seatNumber}}</span>
+                        <!--<span ng-show="seat.status=='available'">Available</span>
+                    <span ng-show="seat.status=='selected'">Selected</span>
+                    <span ng-show="seat.status=='booked'">Bppked</span>-->
+
+                    </div>
+                    <div ng-if="seat.seatNumber==0" style="width:25px">
+
+                        <span style="display:block">&nbsp;</span>
+                    </div>
+                </td>
+
+            </tr>
+        </table>
+    </div>
+    <div class="col-md-4">
+        
+        <div>
+            <h3>Selected seats</h3>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Seat Number</th>
+                        <th>Fare</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="seat in model.selectedSeats">
+                        <td>{{seat.seatNumber}}</td>
+                        <td>{{seat.fare|number:2}}</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr><td colspan="2" class="text-right">Total: <span>{{model.total}}</span></td></tr>
+                </tfoot>
+            </table>
+            
+          
+        </div>
+        <div>
+            <h3>Customer infomation</h3>
+            <form name="frmbooking">
+                <div class="form-group">
+                    <label class="control-label">Your Name</label>
+                    <input type="text" class="form-control" ng-model="model.customer.CustomerName" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Your Address</label>
+                    <textarea type="text" class="form-control" ng-model="model.customer.Address"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Your Cell Number</label>
+                    <input type="text" class="form-control" ng-model="model.customer.MobileNumber" />
+                </div>
+
+                <div data-loading>
+                    Please wait...
+                </div>
+
+
+                <div class="form-group text-right">
+
+                    <input type="submit" class="btn btn-default" ng-click="reserveSeats()"/>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

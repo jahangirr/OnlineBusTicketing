@@ -1,0 +1,128 @@
+﻿<div class="row" ng-controller="busCtrl" style="background-color: #00bcd4;">
+
+<div class="col-md-12">
+        <div class="alert alert-danger" ng-show="busError">
+            <strong>Error: </strong> {{busError}}
+        </div>
+        <div class="text-right" style="margin-bottom:10px;">
+            <button type="button" class="btn btn-default" ng-click="addBus()">Create new</button>
+        </div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Coch No</th>
+                    <th>Fare</th>
+                    <th>BusType</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="bus in model.buses">
+                    <td>{{bus.CoachNo}}</td>
+                    <td>{{bus.Fare}}</td>
+                    <td>{{bus.BusType}}</td>
+                    <td>
+                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil" ng-click="edit(bus)"></span></button>
+                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-trash" ng-click="delete(bus)"></span></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="modal fade" tabindex="-1" role="dialog" id="addBusModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-primary">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Add new bus</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form" id="addBusForm">
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Bus No</label>
+                            <input class="form-control normal" ng-model="newBus.CoachNo" required />
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Fare</label>
+                            <input type="text" class="form-control normal" ng-model="newBus.Fare" />
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Bus Type</label>
+                            <select ng-model="newBus.BusType" required class="form-control normal">
+                                <option value="AC">AC</option>
+                                <option value="NonAC">NonAC</option>
+                            </select>
+                        </div>
+
+                    </form>
+                </div>
+                <div data-loading>
+                    Please wait...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" form="addBusForm" ng-click="insertBus()">Save changes</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="deleteBus">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-warning">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Confirm delete!</h4>
+                </div>
+                <div class="modal-body">
+                    <!--<p>One fine body&hellip;</p>-->
+                    <p>Are you sure want to delete this Route</p>
+                </div>
+                <div data-loading>
+                    Please wait...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" ng-click="deleteBusConfirm()">Delete Bus</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="editBusModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-primary">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Add new bus</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form" id="addBusForm">
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Bus No</label>
+                            <input class="form-control normal" ng-model="temp.CoachNo" required />
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Fare</label>
+                            <input type="text" class="form-control normal" ng-model="temp.Fare" />
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Bus Type</label>
+                            <select ng-model="temp.BusType" required class="form-control normal">
+                                <option value="AC">AC</option>
+                                <option value="NonAC">NonAC</option>
+                            </select>
+                        </div>
+
+                    </form>
+                </div>
+                <div data-loading>
+                    Please wait...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" form="addBusForm" ng-click="updateBus()">Save changes</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div>

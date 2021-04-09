@@ -1,0 +1,26 @@
+﻿
+<div ng-controller="commonCtrl" style="background-color: #00bcd4;" class="col-md-12">
+
+
+    <h3>Register</h3>
+
+    <div>
+        <div class="well">Please, have registration ..........</div>
+    </div>
+    <div ng-if="registerErr != ''">
+        <div class="alert alert-danger">{{registerErr}}</div>
+    </div>
+
+
+    <div data-loading>
+        Please wait...
+    </div>
+
+    <input class="form-control" type="text" ng-model="registerModel.username" placeholder="email" />
+    <input class="form-control" type="password" ng-model="registerModel.password1" placeholder="Password" />
+     ...Password Minimum 6 Degits
+
+    <input class="form-control" type="password" ng-model="registerModel.password2" placeholder="Confirm Password" />
+    <input class="btn btn-primary" type="button" value="Register" ng-click="register()" />
+
+</div>

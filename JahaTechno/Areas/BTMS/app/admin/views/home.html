@@ -1,0 +1,33 @@
+﻿<div class="row" style="background-color: #00bcd4;" >
+    
+    <div class="alert alert-danger" ng-show="homeError">
+        <strong>Login failed!</strong> {{homeError}}
+    </div>
+    <div class="col-md-12">
+        <h2>Today's Schedule ({{today|date:'yyyy-MM-dd'}})</h2>
+        <table class="table table-bordered table-striped">
+            <thead>
+               <tr>
+                   <th>From</th>
+                   <th>Destination</th>
+                   <th>Departure Time</th>
+                   <th>Bus Number</th>
+                   <th>Bus Type</th>
+                   <th>Total Seats/Booked</th>
+                   <th>Available Seats</th>
+               </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="schedule in model.allSchedules">
+                    <td>{{schedule.BusRoute.From}}</td>
+                    <td>{{schedule.BusRoute.To}}</td>
+                    <td>{{schedule.DepartDateTime|date:'h:mma':'UTC'}}</td>
+                    <td>{{schedule.Bus.CoachNo}}</td>
+                    <td>{{schedule.Bus.BusType}}</td>
+                    <td>40/{{schedule.Bookings.length}}</td>
+                    <td>{{40-schedule.Bookings.length}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

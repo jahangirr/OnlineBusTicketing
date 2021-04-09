@@ -1,0 +1,77 @@
+﻿<div id="loginDiv" class="row" style="background-color: #00bcd4;">
+    <div class="alert alert-danger" ng-if="loginErr!=''">
+        <strong>Login failed!</strong> {{loginErr}}
+    </div>
+    <div class="col-md-12">
+        <h3>Login</h3>
+        <div class="well">You must login to access the resource.</div>
+
+        <form name="loginForm">
+            <div class="form-group">
+
+                <input type="email" class="form-control" ng-model="loginModel.username" required placeholder="email" />
+
+            </div>
+            <div class="form-group">
+
+                <input type="text" class="form-control" ng-model="loginModel.password" required placeholder="password" />
+
+
+            </div>
+
+            <div data-loading>
+                Please wait...
+            </div>
+            <div class="form-group">
+
+                <input type="button" value="Log in" class="btn btn-default" ng-disabled="loginForm.$invalid" ng-click="signin()" />
+
+            </div>
+        </form>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
